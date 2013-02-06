@@ -1,0 +1,13 @@
+2012-02-06
+Learning Git by doing: I will follow along with
+http://www.sbf5.com/~cduan/technical/git/
+
+I will document my progress from 1. Repositories to 5. Rebasing in this file.
+
+1. Repositories: 
+First, create a project directory:
+In terminal, "cd ~/Documents/GitHub", then  "mkdir MyGitLessons". That's where this text file will be saved. Right now.
+Next, "cd MyGitLessons", then "git init". This starts a repository.
+
+Now, mark this file to be added the repository: "git add timeline.txt". Or, to add everything (which right now is just this file, but that might change), "git add .". What if I did both? What if I "git add" a non-existent file?
+
