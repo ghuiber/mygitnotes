@@ -17,3 +17,5 @@ Now, add the file to the repository, really: "git commit". So, actual adding see
 
 So, after the previous paragraph, I saved the file, and checked "git status" which showed a change between the version of timeline.txt that was committed and the version I just saved. The difference, of course, was the paragraph above. So, I did "git commit -a -m "I explained the commit"": -a means commit all that's changed, and -m means here comes the commit message. There. Now, I'll save and commit again, with the message "Commits are cheap."
 
+Commits may be cheap, but you can't commit willy-nilly. If you try to do it twice in a row, ensuring that the second commit refers to a file that has suffered no modifications since the first commit, Git will respond tartly: "nothing to commit (working directory clean)".
+
