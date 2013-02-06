@@ -4,7 +4,8 @@ http://www.sbf5.com/~cduan/technical/git/
 
 I will document my progress from 1. Repositories to 5. Rebasing in this file.
 
-1. Repositories: 
+1. Repositories
+
 First, create a project directory:
 In terminal, "cd ~/Documents/GitHub", then  "mkdir MyGitLessons". That's where this text file will be saved. Right now.
 Next, "cd MyGitLessons", then "git init". This starts a repository.
@@ -19,5 +20,11 @@ So, after the previous paragraph, I saved the file, and checked "git status" whi
 
 Commits may be cheap, but you can't commit willy-nilly. If you try to do it twice in a row, ensuring that the second commit refers to a file that has suffered no modifications since the first commit, Git will respond tartly: "nothing to commit (working directory clean)".
 
-Referring to a specific commit: each commit object has a SHA1 name. It's unique. Use it or its first few characters. For, example, to check the difference between 2 objects, do "git diff object1 object2" where object1 and object2 are the first 7 characters of the two objects' SHA1 names.
+Referring to a specific commit: each commit object has a SHA1 name. It's unique. Use it or its first few characters. For example, to check the difference between 2 objects, do "git diff object1 object2" where object1 and object2 are the first 7 characters of the two objects' SHA1 names. To check the difference between what is saved in your folder and the latest commit, type "git diff HEAD". In addition, each commit object has a head. That's just a reference to the object. The head of the current commit is HEAD, in all caps. In every repository, one head is always called master. Not sure yet why, or which head that is. It may have something to do with branching. 
+
+Now, moving on to lesson 2: 
+
+2. Branching
+
+Say you're working on a paper, like this one, and commit after every paragraph. Your writing progresses one section at a time, and each section can consist of many paragraphs. Suppose that you are on section 2, and a draft you circulated came back with notes that require that you change a few things in section 1. Git lets you make those changes in a branch off the last commit of section 1. This leaves undisturbed whatever it is you're doing in section 2.
 
