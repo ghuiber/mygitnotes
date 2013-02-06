@@ -19,3 +19,5 @@ So, after the previous paragraph, I saved the file, and checked "git status" whi
 
 Commits may be cheap, but you can't commit willy-nilly. If you try to do it twice in a row, ensuring that the second commit refers to a file that has suffered no modifications since the first commit, Git will respond tartly: "nothing to commit (working directory clean)".
 
+Referring to a specific commit: each commit object has a SHA1 name. It's unique. Use it or its first few characters. For, example, to check the difference between 2 objects, do "git diff object1 object2" where object1 and object2 are the first 7 characters of the two objects' SHA1 names.
+
