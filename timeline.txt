@@ -50,4 +50,8 @@ Anyway: the conflict resolved and the merge completed, it's time to see the resu
 
 Once the merge was completed, I deleted the gh_mention_amend branch: one less head to worry about. The command is "git branch -d gh_mention_amend". The picture from "git log --graph --oneline" is unchanged. The fact that I once had a separate branch is preserved in history. I can refer to any of its commits by name, and even branch from them. The head at gh_mention_amend is simply not needed anymore.
 
-That said, you should only delete heads that have been merged in. If you try to delete a head that's still at the tip of a branch, you will make the commit at the tip of that branch impossible to refer to: that is called a dangling commit. It is useless, its information lost. You can force-delete a branch with a dangling commit by doing "git branch -D" but you should never put yourself into that situation, says the tutorial. I wonder why Git can't prevent it in the first place, with an error message in response to such an attempt. 
+That said, you should only delete heads that have been merged in. If you try to delete a head that's still at the tip of a branch, you will make the commit at the tip of that branch impossible to refer to: that is called a dangling commit. It is useless, its information lost. You can force-delete a branch with a dangling commit by doing "git branch -D" but you should never put yourself into that situation, says the tutorial. I wonder why Git can't prevent it in the first place, with an error message in response to such an attempt.
+
+4. Collaborating
+
+ 
