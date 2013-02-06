@@ -22,6 +22,8 @@ Commits may be cheap, but you can't commit willy-nilly. If you try to do it twic
 
 Referring to a specific commit: each commit object has a SHA1 name. It's unique. Use it or its first few characters. For example, to check the difference between 2 objects, do "git diff object1 object2" where object1 and object2 are the first 7 characters of the two objects' SHA1 names. To check the difference between what is saved in your folder and the latest commit, type "git diff HEAD". In addition, each commit object has a head. That's just a reference to the object. The head of the current commit is HEAD, in all caps. In every repository, one head is always called master. Not sure yet why, or which head that is. It may have something to do with branching. 
 
+Bonus: when you commit something you didn't mean to, and that's the current HEAD, you can fix it by committing the piece you want with "git commit --amend". This then makes the new commit the HEAD, and the previous will be discarded. That's a way to keep the chain of commit objects clean, I guess. Now I wonder if maybe I could cut out some intermediate commits. Surely, one after every paragraph is overkill. I know they're cheap, but I don't want to wade through a lot of them. 
+
 Now, moving on to lesson 2: 
 
 2. Branching
