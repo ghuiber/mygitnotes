@@ -9,5 +9,9 @@ First, create a project directory:
 In terminal, "cd ~/Documents/GitHub", then  "mkdir MyGitLessons". That's where this text file will be saved. Right now.
 Next, "cd MyGitLessons", then "git init". This starts a repository.
 
-Now, mark this file to be added the repository: "git add timeline.txt". Or, to add everything (which right now is just this file, but that might change), "git add .". What if I did both? What if I "git add" a non-existent file?
+Now, mark this file to be added the repository: "git add timeline.txt". Or, to add everything (which right now is just this file, but that might change), "git add .". What if I did both? It's all good.
+
+Question: What if I "git add foo", where foo is a non-existent file? An error message will be thrown: "fatal: pathspec 'foo' did not match any files".
+
+Now, add the file to the repository, really: "git commit". So, actual adding seems to happen in two steps: "git add" marks for addition, and "git commit" completes the addition. A commit message is required. You do "git commit -m "my first commit"" or you may do "git commit", but that will open vi and you will have to type in the commit message at the top, then exit with wq. So, it looks like you're typing in the actual file, but you're not. You can check that with "cat timeline.txt", which won't show the message, and with "git log" which will: so, you typed in the log, not in the file. All is well. Without a message, the commit is aborted. 
 
