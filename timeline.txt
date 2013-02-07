@@ -84,6 +84,8 @@ What Git does when it sees this is what's sensible: merges (D) and (C) into a ne
 (A)---(B)---(C)---(E)
                    master
 
+An alternative to this is rebasing, explained in the next section. You could rebase your local repository so your (C) head is rewritten into a new commit that is a descendant of D rather than B. More on that in the next section.
+
 Adding and deleting branches remotely 
 
 You add a new branch onto the remote repository with "git push --set-upstream origin new-branch", but see the chunk of commands that this a modern shortcut for (as of Git 1.7):
@@ -97,4 +99,13 @@ See what this did? You push the new branch, move into some other local branch, t
 To delete a remote branch, just do "git push [remote-repository-reference] :[head-name]". The colon means that you're pushing "no data" into the remote head_name.
 
 That's how collaborating goes. A remote repository should do only push/pull, so nobody makes direct edits on the code in it. All editing should happen on local copies. GitHub is basically a public remote repository service. You do push/pull on/off it.
- 
+
+5. Rebasing
+
+There is a way to change history in Git, which is sometimes useful, other times dangerous. The idea is that the current commit is the end of one branch: say the root is commit (A), then comes (B), then the tree splits into commits (C) and (D) along one branch, and (E) and (F) along another. Now suppose the current head is (D). It has a common ancestor with (F), which is (B). Say you want to make that common ancestor (E) instead. You're trying to change history here, and Git can't do that readily, but it does give you a workaround. If HEAD is at (D) and you say "git rebase E", Git does two things. First, it goes down the path to B, and sets aside changes that happened at (C). Then, it makes (B) point to (E) as an ancestor. Finally, all the changes set aside are grafted onto (B) and it turns (B) into a new commit, call it (G). So, your HEAD is still the HEAD, but it's now a different commit (it incorporates changes set aside) and its ancestry is diferent: instead of springing from (B)--(C) it now springs from (E). 
+
+The danger is that this rebased HEAD is not a descendent of the pre-rebased HEAD. It's a brand new replacement as far as the remote repository is concerned, if you have a remote repository. So, you can't push it there, because it will not result in a fast-forward merge. 
+
+But there are two situations where rebase is helpful. First, if you develop a private branch off a main trunk that is itself under development,  you can rebase it occasionally so you keep up with developments on the main trunk, and make your local HEAD look like a direct descendant of the main head. Second, if you're working away from the main trunk in one direction and another developer works away in another direction, when either of youd does a git pull Git will enforce the merge described in the previous section. If one of you rebases to the other, this enforced merge is not needed anymore, but it's not clear that a rebase is either less work, or more intuitive. So, use rebase with care.
+
+
