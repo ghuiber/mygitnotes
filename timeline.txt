@@ -54,4 +54,47 @@ That said, you should only delete heads that have been merged in. If you try to 
 
 4. Collaborating
 
+Make a local copy of a remote repository: "git clone [remote_repository]" where [remote_repository] can be a simple file path or URI such as ssh:// or http:// (or git://, like I've seen on GitHub; more on GitHub later, I think). This will be a brand new copy, all yours. Its commit tree will have remote heads: a master head and others, as the case may be. By default, Git calls them origin/master, origin/branch1, etc. Your own local copy will have a current master commit point. You can refer to that commit point's head, then, as either origin/master, or master, I think.
+
+If you want to work with origin/branch1 locally, you need to set up a tracking branch: "git branch --track branch1 origin/branch1" (assuming you want to name that local branch head branch1; you can name it anything, as long as it tracks what you want to track, which is origin/branch1.
+
+If there is progress on the remote repository and you want your local copy updated, the command is "git pull" as follows: run simply as "git pull" it will update all the remote-tracking branches. So, if you've set up tracking, all you need is "git pull". If you haven't set up any tracking, the general command is "git pull [remote_repository_reference] [remote_head_name]". Suppose that the remote head you want is branch1, and the remote repository reference is "origin", as usual. This version of git pull will merge origin/branch1 into your local HEAD. That makes sense. On your own side, it's assumed that HEAD, your current commit, is where you want to be. If, for example, that is not the local master, but the local branch1, it's up to you to position yourself there ahead of the  "git pull" call, using "git checkout branch1".
+
+"git pull" is actually shorthand for a sequence of two other commands: "git fetch" and "git merge". The former updates the origin heads, but leaves your own local heads unchanged. The latter merges the new origin heads into your local heads, just like "git merge" discussed in the previous section.
+
+Adding commits to the remote repository: "git push". This has a default syntax similar to that of git pull: "git push [remote_repository_reference] [remote_head_name]". This, as you might imagine, pushes new commit objects in your local HEAD to the remote head you're pointing to. But the way this happens is that Gits sets the [remote_head_name] to point to the same commit SHA1 on the remote repository as it does on your local repository. This is tricky: Git requires that a push result in a fast-forward merge on the remote repository. That is, before the merge [remote_head_name] must point to an ancestor of your local HEAD, the commit that it will point to after the merge.
+
+This may not happen if you did "git pull" when the remote repository master was at a certain commit point, then you branched off, and for some reason called the branch a master, and the old master something else. You can rename branches with "git branch -m [old_name] [new_name]". So suppose you did that, and now you're trying to push the change to the remote repository. This does not advance the repository master along the same commit path. It is moving it somewhere altogether new, and as a consequence it turns the old origin/master branch into a dangling commit: it has no name, so it's in the bad situation referenced in the last paragraph of the previous section.
+
+So, dangling commits are a bad thing and Git complains about them. Take that complaint seriously. When you can't do a fast-forward merge with "git push" you've screwed something up. Stop and Google.
+
+A similar mismatch can happen on the pull side: say the remote repository consists of commits A and B with origin/master at B when you do your first "git pull". Then you do some work and advance your local master to local commit C. At the same time, a different developer who did his own first "git pull" at the same time you did, did some work of his own, advanced the master to a different commit D, and pushed it back to the server. Now when you do "git pull" you have a problem: the origin/master can't do a fast-forward merge, because it's not an ancestor of your local master. You look like this:
+
+Remote repository            Your local repository
+
+        +---(D)
+       /     origin/master          
+(A)---(B)                    (A)---(B)---(C)
+                                          master
+
+What Git does when it sees this is what's sensible: merges (D) and (C) into a new commit (E) on your local repository:
+
+        +---(D)---+
+       /           \
+(A)---(B)---(C)---(E)
+                   master
+
+Adding and deleting branches remotely 
+
+You add a new branch onto the remote repository with "git push --set-upstream origin new-branch", but see the chunk of commands that this a modern shortcut for (as of Git 1.7):
+git push origin new-branch
+git checkout [some-other-branch]
+git branch -f new-branch origin/new-branch
+git checkout new-branch
+
+See what this did? You push the new branch, move into some other local branch, then with "git branch -f" you set up your local new branch to "git pull" from the remote repository by default. Then you check it out. This whole succession makes sense, but it's nice to have the "--set-upstream" shortcut.
+
+To delete a remote branch, just do "git push [remote-repository-reference] :[head-name]". The colon means that you're pushing "no data" into the remote head_name.
+
+That's how collaborating goes. A remote repository should do only push/pull, so nobody makes direct edits on the code in it. All editing should happen on local copies. GitHub is basically a public remote repository service. You do push/pull on/off it.
  
